@@ -1,3 +1,5 @@
+import { fetch } from '../../common/network'
+
 const FLEX_URL = 'https://gdcdyn.interactivebrokers.com/Universal/servlet/FlexStatementService'
 
 /**
@@ -21,7 +23,7 @@ async function sendRequest (token: string, queryId: string): Promise<string> {
     body
   })
 
-  const text = await response.text()
+  const text: string = response.body as string
 
   // IBKR errors
   if (text.includes('<ErrorCode>')) {
@@ -51,7 +53,7 @@ async function getStatement (token: string, ref: string): Promise<string> {
     body
   })
 
-  const text = await response.text()
+  const text: string = response.body as string
 
   // IBKR errors
   if (text.includes('<ErrorCode>')) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <provider>
     <id>interactive-brokers</id>
-    <company>0</company>
+    <company>16146</company>
 
     <description>
     Imports portfolio balances from Interactive Brokers using the Mint‑compatible Flex Query report.
