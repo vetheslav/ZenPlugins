@@ -88,4 +88,56 @@ describe('parseCardTurnover', () => {
     expect(result[1].id).toBe('4321')
     expect(result[1].amount).toBe(400)
   })
+
+  it('drops pending row: placeholder bookingDate and finalFlag 1', () => {
+    const responseBody: string[][][][] = [[
+      [['', '', '', '978', '1111']],
+      [[
+        '', '', '06.03.2026 00:00:00', 'EMIRATES',
+        '01.01.1900 00:00:00', '1111*****1111', '530862918', '100', '', '', 'RSD',
+        '', '', '', '', '', '', '', '', '', '', '', '', '0', '', '', '', '0', '', '1'
+      ]]
+    ]]
+
+    expect(parseCardTurnover(responseBody)).toHaveLength(0)
+  })
+
+  it('keeps posted row: real bookingDate and finalFlag 0', () => {
+    const responseBody: string[][][][] = [[
+      [['', '', '', '978', '1111']],
+      [[
+        '', '', '15.03.2026 00:00:00', 'CLAUDE.AI',
+        '15.03.2026 00:00:00', '1111*****1111', '8722', '20', '', '', 'EUR',
+        '', '', '', '', '', '', '', '', '', '', '', '', '0', '', '', '', '0', '', '0'
+      ]]
+    ]]
+
+    const result = parseCardTurnover(responseBody)
+
+    expect(result).toHaveLength(1)
+    expect(result[0].id).toBe('8722')
+    expect(result[0].bookingDate).toBe('15.03.2026 00:00:00')
+    expect(result[0].finalFlag).toBe('0')
+    expect(result[0].amount).toBe(-20)
+  })
+
+  it('drops pending and keeps posted when both rows present', () => {
+    const responseBody: string[][][][] = [[
+      [['', '', '', '978', '1111']],
+      [[
+        '', '', '06.03.2026 00:00:00', 'HOLD',
+        '01.01.1900 00:00:00', '1111*****1111', '111', '50', '', '', 'RSD',
+        '', '', '', '', '', '', '', '', '', '', '', '', '0', '', '', '', '0', '', '1'
+      ], [
+        '', '', '15.03.2026 00:00:00', 'POSTED',
+        '15.03.2026 00:00:00', '1111*****1111', '222', '10', '', '', 'EUR',
+        '', '', '', '', '', '', '', '', '', '', '', '', '0', '', '', '', '0', '', '0'
+      ]]
+    ]]
+
+    const result = parseCardTurnover(responseBody)
+
+    expect(result).toHaveLength(1)
+    expect(result[0].id).toBe('222')
+  })
 })

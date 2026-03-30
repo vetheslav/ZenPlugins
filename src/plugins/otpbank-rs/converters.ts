@@ -208,10 +208,16 @@ function movementId (accountId: string, bankTransactionId: string, date: Date): 
   return `${accountId}_${date.getTime()}`
 }
 
+function isPlaceholderBookingDate (bookingDate: string): boolean {
+  return bookingDate.startsWith('01.01.1900')
+}
+
 export function convertTransaction (apiTransaction: OtpTransaction, account: Account): ExtendedTransaction {
   const merchant = parseMerchant(apiTransaction.title, apiTransaction.merchant)
+  const bookingDate = apiTransaction.bookingDate ?? ''
+  const hasMeaningfulBookingDate = bookingDate !== '' && !isPlaceholderBookingDate(bookingDate)
   const completed = Boolean(
-    (apiTransaction.bookingDate != null && apiTransaction.bookingDate !== '') ||
+    hasMeaningfulBookingDate ||
     (apiTransaction.status != null && apiTransaction.status !== '') ||
     apiTransaction.finalFlag === '0'
   )

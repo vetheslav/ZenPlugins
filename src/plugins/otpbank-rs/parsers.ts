@@ -124,11 +124,24 @@ export function parseCardTurnover (responseBody: string[][][][]): OtpTransaction
   return transactions
 }
 
+// Skips GetCardTurnover rows that are not posted yet (placeholder booking and/or hold flag).
+function isPendingCardTurnoverRow (row: string[]): boolean {
+  const bookingDate = row[4] ?? ''
+  if (bookingDate.startsWith('01.01.1900')) {
+    return true
+  }
+  return (row[29] ?? '') === '1'
+}
+
 function parseCardTransaction (row: string[], currencyCodeNumeric: string): OtpTransaction | null {
   const parseDate = (dateString: string): Date => {
     const [datePart] = dateString.split(' ')
     const [day, month, year] = datePart.split('.').map(Number)
     return new Date(year, month - 1, day)
+  }
+
+  if (isPendingCardTurnoverRow(row)) {
+    return null
   }
 
   const id = row[6] ?? ''
