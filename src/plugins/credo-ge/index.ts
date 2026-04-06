@@ -1,7 +1,7 @@
 import { Account, ExtendedTransaction, ScrapeFunc, Transaction } from '../../types/zenmoney'
 import { fetchAccounts, fetchTransactions, login } from './api'
 import { fetchCards, fetchDeposits, fetchLoans, fetchBlockedTransactions, getTransactionDetail } from './fetchApi'
-import { convertAccounts, convertTransaction, getAccountNumberToAccountMapping } from './converters'
+import { convertAccounts, convertTransaction, getAccountNumberToAccountMapping, mergeForeignCurrencyPairs } from './converters'
 import { Auth, Preferences, Transaction as CredoTransaction } from './models'
 import { getOptNumber } from '../../types/get'
 import { deduplicateTransactions } from './deduplicateTransactions'
@@ -65,5 +65,5 @@ export const scrape: ScrapeFunc<Preferences> = async ({ preferences, fromDate, t
 
   const deduplicatedTransactions: Transaction[] = deduplicateTransactions(transactions)
 
-  return { accounts, transactions: deduplicatedTransactions }
+  return { accounts, transactions: mergeForeignCurrencyPairs(deduplicatedTransactions) }
 }
