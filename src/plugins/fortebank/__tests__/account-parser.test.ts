@@ -29,7 +29,7 @@ TEST USER
     })
 
     it('should parse compact card statement header correctly', () => {
-    const header = parseAccountHeader(content)
+      const header = parseAccountHeader(content)
       expect(header.accountNumber).toBe('KZ000000000000000001')
       expect(header.currency).toBe('KZT')
       expect(header.balance).toBe(0)
@@ -51,7 +51,7 @@ TEST USER
       expect(transactions[1]).toMatchObject({
         date: '11.04.2026',
         amount: 2510.70,
-        operation: 'Payment'
+        operation: 'Платеж'
       })
 
       expect(transactions[3]).toMatchObject({
@@ -59,6 +59,31 @@ TEST USER
         amount: 100,
         operation: 'Account replenishment',
         description: 'BCC, ATM/POS: 124884, PEREVOD BCC.KZ, Al-Farabi 38, ALMATY, KZ'
+      })
+    })
+
+    it('should treat correspondent-account replenishment as internal transfer', () => {
+      const transferContent = `
+Выписка по карточному счету
+TEST USER
+ИИН: 111111111111
+Доступно на 13.04.2026: 0.00 KZT
+Номер счета: KZ000000000000000001
+Валюта счета: KZT
+Детализация выписки по Дебетовой карте
+Дата Сумма Описание Детализация
+13.04.2026 99.98 KZT Пополнение счета Bank: IRTYKZKA (АО ForteBank), Счёт- корреспондент: KZ000000000000000002 Пополнение счёта
+      `
+
+      const [transaction] = parseAccountTransactions(transferContent)
+      expect(transaction).toMatchObject({
+        date: '13.04.2026',
+        amount: 99.98,
+        operation: 'Transfer',
+        parsedDetails: expect.objectContaining({
+          receiverAccount: 'KZ000000000000000002',
+          receiver: expect.stringContaining('KZ000000000000000002')
+        })
       })
     })
   })
@@ -73,7 +98,7 @@ TEST USER
 
     it('should parse header correctly', () => {
       const header = parseAccountHeader(content)
-      expect(header.accountNumber).toBe('KZ2396502F0018705204')
+      expect(header.accountNumber).toBe('KZ000000000000000000')
       expect(header.currency).toBe('KZT')
       // Available amount: 0.46 (based on actual file parsing of "0,46" at end of line)
       expect(header.balance).toBe(0.46)

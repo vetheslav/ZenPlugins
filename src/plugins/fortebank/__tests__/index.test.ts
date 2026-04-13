@@ -18,6 +18,7 @@ global.ZenMoney = {
 describe('Fortebank KZ Scraper', () => {
   let scrape: any
   let readPdfTextsSequentially: any
+  let relinkInternalTransfers: any
   let parsePdfMock: jest.Mock
   let isAccountStatementMock: jest.Mock
   let isDepositStatementMock: jest.Mock
@@ -90,11 +91,12 @@ describe('Fortebank KZ Scraper', () => {
     const index = require('../index')
     scrape = index.scrape
     readPdfTextsSequentially = index.readPdfTextsSequentially
+    relinkInternalTransfers = index.relinkInternalTransfers
 
     // Default mock behaviors
     parsePdfMock.mockResolvedValue({ text: 'mock pdf text' })
-    convertAccountMock.mockReturnValue({ id: 'acc1', title: 'Test Account' })
-    convertDepositMock.mockReturnValue({ id: 'dep1', title: 'Test Deposit' })
+    convertAccountMock.mockReturnValue({ id: 'acc1', title: 'Test Account', syncIds: [] })
+    convertDepositMock.mockReturnValue({ id: 'dep1', title: 'Test Deposit', syncIds: [] })
     convertTransactionMock.mockReturnValue({ date: '2025-01-01', amount: 100 })
     parseAccountHeaderMock.mockReturnValue({})
     parseAccountTransactionsMock.mockReturnValue([])
@@ -171,5 +173,43 @@ describe('Fortebank KZ Scraper', () => {
     await expect(promise).resolves.toEqual(['first pdf text', 'second pdf text'])
     expect(parsePdfMock).toHaveBeenCalledTimes(2)
     expect(parsePdfMock).toHaveBeenNthCalledWith(2, 'second-blob')
+  })
+
+  it('should relink counterpart movement to known internal account by sync id', () => {
+    const accounts = [
+      { id: 'card-1', syncIds: ['KZ000000000000000001'] },
+      { id: 'deposit-1', syncIds: ['KZ000000000000000003'] }
+    ]
+
+    const transactions = [{
+      date: new Date('2026-04-13T00:00:00.000Z'),
+      hold: false,
+      merchant: null,
+      comment: 'Перевод',
+      movements: [
+        {
+          id: null,
+          account: { id: 'card-1' },
+          invoice: null,
+          sum: -99.98,
+          fee: 0
+        },
+        {
+          id: null,
+          account: {
+            type: 'checking',
+            instrument: 'KZT',
+            company: null,
+            syncIds: ['KZ000000000000000003']
+          },
+          invoice: null,
+          sum: 99.98,
+          fee: 0
+        }
+      ]
+    }]
+
+    const [transaction] = relinkInternalTransfers(accounts, transactions)
+    expect(transaction.movements[1].account).toEqual({ id: 'deposit-1' })
   })
 })

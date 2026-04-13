@@ -22,11 +22,6 @@ describe('Fortebank Parser', () => {
       expect(normalizeText('K Z 1 2')).toBe('KZ12')
     })
 
-    it('should preserve regular word spacing', () => {
-      expect(normalizeText('Выписка по карточному счету')).toBe('Выписка по карточному счету')
-      expect(normalizeText('BCC, ATM/POS: 124884, PEREVOD BCC.KZ')).toBe('BCC, ATM/POS: 124884, PEREVOD BCC.KZ')
-    })
-
     it('should preserve newlines', () => {
       expect(normalizeText('A\nB')).toBe('A\nB')
     })

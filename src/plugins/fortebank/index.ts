@@ -1,4 +1,4 @@
-import { ScrapeFunc, Account, Transaction } from '../../types/zenmoney'
+import { ScrapeFunc, Account, Transaction, AccountReferenceByData } from '../../types/zenmoney'
 import { parsePdf } from '../../common/pdfUtils'
 import { Preferences } from './models'
 import { detectLocale, splitSections, parseHeader, parseTransactions } from './parser'
@@ -15,6 +15,36 @@ export async function readPdfTextsSequentially (blobs: Blob[], readPdf: typeof p
   }
 
   return texts
+}
+
+export function relinkInternalTransfers (accounts: Account[], transactions: Transaction[]): Transaction[] {
+  const accountBySyncId = new Map<string, Account>()
+
+  for (const account of accounts) {
+    for (const syncId of account.syncIds) {
+      accountBySyncId.set(syncId, account)
+    }
+  }
+
+  return transactions.map(transaction => {
+    const counterpartMovement = transaction.movements[1]
+    if (counterpartMovement == null) {
+      return transaction
+    }
+
+    const counterpartAccount = counterpartMovement.account as AccountReferenceByData
+    const syncIds = counterpartAccount.syncIds ?? []
+    const matchedAccount = syncIds
+      .map(syncId => accountBySyncId.get(syncId))
+      .find((account): account is Account => account != null)
+
+    if (matchedAccount == null) {
+      return transaction
+    }
+
+    counterpartMovement.account = { id: matchedAccount.id }
+    return transaction
+  })
 }
 
 export const scrape: ScrapeFunc<Preferences> = async () => {
@@ -80,6 +110,6 @@ export const scrape: ScrapeFunc<Preferences> = async () => {
 
   return {
     accounts,
-    transactions
+    transactions: relinkInternalTransfers(accounts, transactions)
   }
 }
