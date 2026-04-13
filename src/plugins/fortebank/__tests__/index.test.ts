@@ -17,8 +17,10 @@ global.ZenMoney = {
 
 describe('Fortebank KZ Scraper', () => {
   let scrape: any
+  let readPdfTextsSequentially: any
   let parsePdfMock: jest.Mock
   let isAccountStatementMock: jest.Mock
+  let isDepositStatementMock: jest.Mock
   let parseAccountHeaderMock: jest.Mock
   let parseAccountTransactionsMock: jest.Mock
   let detectLocaleMock: jest.Mock
@@ -26,6 +28,7 @@ describe('Fortebank KZ Scraper', () => {
   let parseHeaderMock: jest.Mock
   let parseTransactionsMock: jest.Mock
   let convertAccountMock: jest.Mock
+  let convertDepositMock: jest.Mock
   let convertTransactionMock: jest.Mock
 
   beforeEach(() => {
@@ -35,6 +38,7 @@ describe('Fortebank KZ Scraper', () => {
 
     parsePdfMock = jest.fn()
     isAccountStatementMock = jest.fn()
+    isDepositStatementMock = jest.fn()
     parseAccountHeaderMock = jest.fn()
     parseAccountTransactionsMock = jest.fn()
     detectLocaleMock = jest.fn()
@@ -42,6 +46,7 @@ describe('Fortebank KZ Scraper', () => {
     parseHeaderMock = jest.fn()
     parseTransactionsMock = jest.fn()
     convertAccountMock = jest.fn()
+    convertDepositMock = jest.fn()
     convertTransactionMock = jest.fn()
 
     // Mock pdfUtils
@@ -58,6 +63,12 @@ describe('Fortebank KZ Scraper', () => {
       parseAccountTransactions: parseAccountTransactionsMock
     }))
 
+    jest.doMock('../deposit-parser', () => ({
+      __esModule: true,
+      isDepositStatement: isDepositStatementMock,
+      parseDepositHeader: jest.fn().mockReturnValue({})
+    }))
+
     // Mock parser
     jest.doMock('../parser', () => ({
       __esModule: true,
@@ -71,16 +82,19 @@ describe('Fortebank KZ Scraper', () => {
     jest.doMock('../converters', () => ({
       __esModule: true,
       convertAccount: convertAccountMock,
+      convertDeposit: convertDepositMock,
       convertTransaction: convertTransactionMock
     }))
 
     // Import the module under test
     const index = require('../index')
     scrape = index.scrape
+    readPdfTextsSequentially = index.readPdfTextsSequentially
 
     // Default mock behaviors
     parsePdfMock.mockResolvedValue({ text: 'mock pdf text' })
     convertAccountMock.mockReturnValue({ id: 'acc1', title: 'Test Account' })
+    convertDepositMock.mockReturnValue({ id: 'dep1', title: 'Test Deposit' })
     convertTransactionMock.mockReturnValue({ date: '2025-01-01', amount: 100 })
     parseAccountHeaderMock.mockReturnValue({})
     parseAccountTransactionsMock.mockReturnValue([])
@@ -88,6 +102,7 @@ describe('Fortebank KZ Scraper', () => {
     parseTransactionsMock.mockReturnValue([])
     splitSectionsMock.mockReturnValue({ header: '', transactions: '', attic: '' })
     detectLocaleMock.mockReturnValue('ru')
+    isDepositStatementMock.mockReturnValue(false)
   })
 
   it('should use account-parser if isAccountStatement returns true', async () => {
@@ -133,5 +148,28 @@ describe('Fortebank KZ Scraper', () => {
 
     await expect(scrape({} as any)).rejects.toThrow('PDF Error')
     consoleSpy.mockRestore()
+  })
+
+  it('should read pdfs sequentially', async () => {
+    let resolveFirst: ((value: { text: string }) => void) | undefined
+
+    parsePdfMock
+      .mockImplementationOnce(async () => await new Promise(resolve => {
+        resolveFirst = resolve
+      }))
+      .mockResolvedValueOnce({ text: 'second pdf text' })
+
+    const promise = readPdfTextsSequentially(['first-blob', 'second-blob'] as any)
+
+    await Promise.resolve()
+
+    expect(parsePdfMock).toHaveBeenCalledTimes(1)
+    expect(parsePdfMock).toHaveBeenNthCalledWith(1, 'first-blob')
+
+    resolveFirst?.({ text: 'first pdf text' })
+
+    await expect(promise).resolves.toEqual(['first pdf text', 'second pdf text'])
+    expect(parsePdfMock).toHaveBeenCalledTimes(2)
+    expect(parsePdfMock).toHaveBeenNthCalledWith(2, 'second-blob')
   })
 })

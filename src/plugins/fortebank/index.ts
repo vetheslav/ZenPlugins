@@ -6,16 +6,26 @@ import { isAccountStatement, parseAccountHeader, parseAccountTransactions } from
 import { isDepositStatement, parseDepositHeader } from './deposit-parser'
 import { convertAccount, convertDeposit, convertTransaction } from './converters'
 
+export async function readPdfTextsSequentially (blobs: Blob[], readPdf: typeof parsePdf = parsePdf): Promise<string[]> {
+  const texts: string[] = []
+
+  for (const blob of blobs) {
+    const { text } = await readPdf(blob)
+    texts.push(text)
+  }
+
+  return texts
+}
+
 export const scrape: ScrapeFunc<Preferences> = async () => {
   const blobs = await ZenMoney.pickDocuments(['application/pdf'], true)
+  const texts = await readPdfTextsSequentially(blobs)
 
   const accounts: Account[] = []
   const transactions: Transaction[] = []
 
-  for (const blob of blobs) {
+  for (const text of texts) {
     try {
-      const { text } = await parsePdf(blob)
-
       if (isDepositStatement(text)) {
         const parsedHeader = parseDepositHeader(text)
         const parsedTransactions = parseAccountTransactions(text)

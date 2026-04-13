@@ -5,6 +5,64 @@ import { isAccountStatement, parseAccountHeader, parseAccountTransactions } from
 const TEST_DATA_DIR = path.join(__dirname, 'test_data')
 
 describe('Account Statement Parser', () => {
+  describe('compact card statement format', () => {
+    const content = `
+Выписка по карточному счету
+TEST USER
+ИИН: 111111111111
+Доступно на 13.04.2026: 0.00 KZT
+Номер счета: KZ000000000000000001
+Валюта счета: KZT
+Детализация выписки по Дебетовой карте
+Дата Сумма Описание Детализация
+13.04.2026 -99.98 KZT Перевод На счет: KZ000000000000000002
+11.04.2026 2510.70 KZT Платеж АЛСЕКО;NameVC=Коммуналка;VC=2;VC2=3;ServiceId=190;PAYMENT_ID=test-payment-id-compact-0001;USEBONUS=1;BONUS_AMOUNT=2510.70
+11.04.2026 -48025.09 KZT Платеж АЛСЕКО;NameVC=Коммуналка;VC=2;VC2=3;ServiceId=190;PAYMENT_ID=test-payment-id-compact-0001;USEBONUS=1;BONUS_AMOUNT=2510.70
+11.04.2026 100.00 KZT Пополнение счета BCC, ATM/POS: 124884, PEREVOD BCC.KZ, Al-Farabi 38, ALMATY, KZ
+11.04.2026 45503.70 KZT Пополнение счета BCC, ATM/POS: 124884, PEREVOD BCC.KZ, Al-Farabi 38, ALMATY, KZ
+11.04.2026 10.67 KZT Пополнение счета Снятие со вклада (КНП 322) ;ISJUR
+Сформировано в Интернет Банкинге
+    `
+
+    it('should detect compact card statement as account statement', () => {
+      expect(isAccountStatement(content)).toBe(true)
+    })
+
+    it('should parse compact card statement header correctly', () => {
+    const header = parseAccountHeader(content)
+      expect(header.accountNumber).toBe('KZ000000000000000001')
+      expect(header.currency).toBe('KZT')
+      expect(header.balance).toBe(0)
+    })
+
+    it('should parse compact card statement transactions correctly', () => {
+      const transactions = parseAccountTransactions(content)
+      expect(transactions).toHaveLength(6)
+
+      expect(transactions[0]).toMatchObject({
+        date: '13.04.2026',
+        amount: -99.98,
+        operation: 'Transfer',
+        parsedDetails: expect.objectContaining({
+          receiverAccount: 'KZ000000000000000002'
+        })
+      })
+
+      expect(transactions[1]).toMatchObject({
+        date: '11.04.2026',
+        amount: 2510.70,
+        operation: 'Payment'
+      })
+
+      expect(transactions[3]).toMatchObject({
+        date: '11.04.2026',
+        amount: 100,
+        operation: 'Account replenishment',
+        description: 'BCC, ATM/POS: 124884, PEREVOD BCC.KZ, Al-Farabi 38, ALMATY, KZ'
+      })
+    })
+  })
+
   describe('account_statementKZT_EN.txt', () => {
     const file = 'account_statementKZT_EN.txt'
     const content = fs.readFileSync(path.join(TEST_DATA_DIR, file), 'utf8')

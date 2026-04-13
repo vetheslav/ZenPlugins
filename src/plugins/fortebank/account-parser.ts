@@ -6,7 +6,7 @@ import { normalizeText, parseNumber } from './utils'
 
 export function isAccountStatement (text: string): boolean {
   const normalized = normalizeText(text)
-  return /Receipts\s*Expenses|Поступления\s*Расходы|Кірістер\s*Шығыстар|Түсімдер\s*Шығындар/i.test(normalized)
+  return /Receipts\s*Expenses|Поступления\s*Расходы|Кірістер\s*Шығыстар|Түсімдер\s*Шығындар|Выписка\s*по\s*карточному\s*счету|Card\s*account\s*statement|Карточкалық\s*шот\s*бойынша\s*үзінді/i.test(normalized)
 }
 
 export function parseAccountHeader (text: string): ParsedHeader {
@@ -18,6 +18,17 @@ export function parseAccountHeader (text: string): ParsedHeader {
 
   const currencyMatch = normalized.match(/\(([A-Z]{3})\)/)
   if (currencyMatch != null) res.currency = currencyMatch[1]
+
+  if (res.currency === undefined) {
+    const labeledCurrencyMatch = normalized.match(/(?:Валюта\s*счета|Account\s*currency|Шот\s*валютасы)\s*:\s*([A-Z]{3})/i)
+    if (labeledCurrencyMatch != null) res.currency = labeledCurrencyMatch[1]
+  }
+
+  const availableMatch = normalized.match(/(?:Доступно\s*на|Available\s*as\s*of|Қолжетімді\s*)(?:\d{2}\.\d{2}\.\d{4})?\s*:?\s*([-+]?(?:\d[\d\s]*)[.,]\d{2})\s*[A-Z]{3}?/i)
+  if (availableMatch != null) {
+    res.balance = parseNumber(availableMatch[1])
+    return res
+  }
 
   const lines = normalized.split('\n')
   for (const line of lines) {
@@ -116,6 +127,22 @@ function detectAccountOperation (description: string, amount: number): string {
   return amount < 0 ? 'Purchase' : 'Account replenishment'
 }
 
+function splitKnownOperation (text: string, amount: number): { operation: string, details: string } {
+  for (const op of KNOWN_OPERATIONS) {
+    if (text.toLowerCase().startsWith(op.toLowerCase())) {
+      return {
+        operation: detectAccountOperation(op, amount),
+        details: text.substring(op.length).trim()
+      }
+    }
+  }
+
+  return {
+    operation: detectAccountOperation(text, amount),
+    details: text
+  }
+}
+
 export function parseAccountTransactions (text: string): ParsedTransaction[] {
   const normalized = normalizeText(text)
   const lines = normalized.split('\n')
@@ -123,7 +150,7 @@ export function parseAccountTransactions (text: string): ParsedTransaction[] {
 
   let inTransactions = false
   // Allow spaces or no spaces in header
-  const headerRegex = /Date\s*of\s*transaction|Дата\s*операции|Операция\s*күні/i
+  const headerRegex = /Date\s*of\s*transaction|Дата\s*операции|Операция\s*күні|Дата\s*Сумма\s*Описание\s*Детализация|Date\s*Amount\s*Description\s*Details/i
 
   let currentBlock: string[] = []
 
@@ -137,6 +164,38 @@ export function parseAccountTransactions (text: string): ParsedTransaction[] {
     const date = dateMatch[1]
 
     const fullText = block.join(' ')
+    const compactMatch = fullText.match(/^(\d{2}\.\d{2}\.\d{4})\s+([-+]?(?:\d[\d\s]*)[.,]\d{2})\s+([A-Z]{3})\s+(.+)$/)
+    if (compactMatch != null) {
+      const [, compactDate, compactAmount, , compactRest] = compactMatch
+      const { operation, details } = splitKnownOperation(compactRest.trim(), parseNumber(compactAmount))
+      const { structured, freeText } = parseDetails(details)
+      const parsedDetails: ParsedTransactionDetails = {}
+
+      if (structured.name !== undefined && structured.name !== '') {
+        parsedDetails.merchantName = structured.name
+      }
+      if (structured.bank !== undefined) {
+        parsedDetails.merchantBank = structured.bank
+      }
+      if (structured.account !== undefined) {
+        parsedDetails.receiverAccount = structured.account
+      }
+      if (parsedDetails.merchantName === undefined && freeText !== '') {
+        parsedDetails.merchantName = freeText
+      }
+
+      transactions.push({
+        date: compactDate,
+        amount: parseNumber(compactAmount),
+        description: freeText !== '' ? freeText : details,
+        operation,
+        details,
+        parsedDetails,
+        originString: fullText
+      })
+      return
+    }
+
     // Use double backslash for escaping in string
     // Support trailing minus: 100,00 -
     const amountOrDash = '([-+]?(?:\\d[\\d\\s]*)[.,]\\d{2}(?:\\s*-)?|-)'

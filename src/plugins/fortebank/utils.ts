@@ -4,7 +4,7 @@ export function normalizeText (text: string): string {
   return text
     .replace(/["']/g, '')
     .replace(/\u00A0/g, ' ') // Non-breaking space
-    .replace(/(.) (?=.)/g, '$1') // Remove single spaces between characters (e.g., "T E X T" -> "TEXT")
+    .replace(/(?:[A-Za-zА-Яа-яЁёӘәҒғҚқҢңӨөҰұҮүҺһІі0-9№()/:+*.,\\-]\s+){2,}[A-Za-zА-Яа-яЁёӘәҒғҚқҢңӨөҰұҮүҺһІі0-9№()/:+*.,\\-]/g, match => match.replace(/\s+/g, ''))
     .replace(/\r\n/g, '\n')
     .trim()
 }
