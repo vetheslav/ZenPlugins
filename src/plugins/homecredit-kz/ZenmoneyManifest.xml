@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <provider>
-    <id>home-credit-kz</id>
+    <id>homecredit-kz</id>
     <version>1.0</version>
     <build>1</build>
-    <company>0</company>
+    <company>15500</company>
     <modular>true</modular>
     <codeRequired>false</codeRequired>
     <api>public</api>
