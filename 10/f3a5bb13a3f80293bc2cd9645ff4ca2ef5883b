@@ -1,0 +1,35 @@
+src/receiptFetchers/ukassa-kz/ZenmoneyManifest.ts
+  s_4638eb4bf5afea::t_55f0718aab7438 1-7
+src/receiptFetchers/ukassa-kz/__tests__/convertReceipt-01.json
+  s_4638eb4bf5afea::t_986db5602aed8d 1
+src/receiptFetchers/ukassa-kz/__tests__/convertReceipt.test.ts
+  s_4638eb4bf5afea::t_2bd0522a94f775 1-46
+src/receiptFetchers/ukassa-kz/__tests__/fetchReceipt-01.json
+  s_4638eb4bf5afea::t_925b30af132b0a 1
+src/receiptFetchers/ukassa-kz/__tests__/fetchReceipt.test.ts
+  s_4638eb4bf5afea::t_f4fa37af98daef 1-58
+src/receiptFetchers/ukassa-kz/api.ts
+  s_4638eb4bf5afea::t_46852ae018dc41 1-13
+src/receiptFetchers/ukassa-kz/fetchApi.ts
+  s_4638eb4bf5afea::t_dd59680cf089ec 1-11
+src/receiptFetchers/ukassa-kz/index.ts
+  s_4638eb4bf5afea::t_5dbb088c005120 1-11
+src/receiptFetchers/ukassa-kz/converters.ts
+  s_4638eb4bf5afea::t_f9027f435ee571 1-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "10f3a5bb13a3f80293bc2cd9645ff4ca2ef5883b",
+  "prompts": {},
+  "sessions": {
+    "s_4638eb4bf5afea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1748c-14c1-7bc1-b4f4-a971fd139ed6",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
