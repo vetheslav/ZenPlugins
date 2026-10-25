@@ -1,0 +1,37 @@
+src/receiptFetchers/ikassa-by/__tests__/convertHtmlReceipt-01.html
+  s_c47aba8f47dc3d::t_aba2089e19f945 1-54
+src/receiptFetchers/ikassa-by/__tests__/convertHtmlReceipt-02.html
+  s_c47aba8f47dc3d::t_03a45cb274f41e 1-77
+src/receiptFetchers/ikassa-by/__tests__/convertHtmlReceipt.test.ts
+  s_c47aba8f47dc3d::t_4ae0e0bba75323 1-121
+src/receiptFetchers/ikassa-by/__tests__/fetchReceipt-01.json
+  s_c47aba8f47dc3d::t_27037524ac65df 1
+src/receiptFetchers/ikassa-by/__tests__/fetchReceipt.test.ts
+  s_c47aba8f47dc3d::t_a892a73e69b3fd 2-8,12-106,108-112
+src/receiptFetchers/ikassa-by/index.ts
+  s_c47aba8f47dc3d::t_cf8cddd75550d0 7,11-13
+src/receiptFetchers/ikassa-by/ZenmoneyManifest.ts
+  s_c47aba8f47dc3d::t_5b81001073a155 6-10
+src/receiptFetchers/ikassa-by/api.ts
+  s_c47aba8f47dc3d::t_8255d8973985f3 1-2,4-8,10-33
+src/receiptFetchers/ikassa-by/converters.ts
+  s_c47aba8f47dc3d::t_a8697b88092753 2-3,8-12,43-121
+src/receiptFetchers/ikassa-by/fetchApi.ts
+  s_c47aba8f47dc3d::t_55ecda91955718 1-2,4-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "201c67f4cf4645af8684ff37e2a3142a7be3aa97",
+  "prompts": {},
+  "sessions": {
+    "s_c47aba8f47dc3d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1741a-d224-71a3-8cd4-b7d34d1a27ba",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
