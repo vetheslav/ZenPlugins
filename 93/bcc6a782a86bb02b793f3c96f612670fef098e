@@ -1,0 +1,33 @@
+src/receiptFetchers/ofd1-kz/__tests__/convertReceipt-05.html
+  s_4638eb4bf5afea::t_640141d5abb6da 1-215
+src/receiptFetchers/ofd1-kz/__tests__/fetchReceipt-01.html
+  s_4638eb4bf5afea::t_6264b8cf542bf8 1-232
+src/receiptFetchers/ofd1-kz/converters.ts
+  s_4638eb4bf5afea::t_776e86549af023 1,32-34,40,43,45-49,56-57,71-72
+src/receiptFetchers/ofd1-kz/__tests__/fetchReceipt.test.ts
+  s_63b7a16e084566::t_f79da9b9f13a88 3-5,8-52,59-105
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "93bcc6a782a86bb02b793f3c96f612670fef098e",
+  "prompts": {},
+  "sessions": {
+    "s_4638eb4bf5afea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1748c-14c1-7bc1-b4f4-a971fd139ed6",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    },
+    "s_63b7a16e084566": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a17496-fb91-70c1-99fc-b9bc505d6407",
+        "model": "unknown"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
