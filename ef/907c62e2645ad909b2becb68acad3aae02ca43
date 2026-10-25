@@ -1,0 +1,37 @@
+src/receiptFetchers/buhta-kz/__tests__/convertReceipt-01.html
+  s_4638eb4bf5afea::t_a8f2399c1925a0 1-26
+src/receiptFetchers/buhta-kz/__tests__/convertReceipt.test.ts
+  s_4638eb4bf5afea::t_b0f3e0fc86a08e 1-87
+src/receiptFetchers/buhta-kz/__tests__/fetchReceipt-01.html
+  s_4638eb4bf5afea::t_c6b698ae4ca63c 1-26
+src/receiptFetchers/buhta-kz/__tests__/fetchReceipt.test.ts
+  s_4638eb4bf5afea::t_bd8e0f8a67dcf1 1-76
+src/receiptFetchers/buhta-kz/converters.ts
+  s_4638eb4bf5afea::t_8811bb1b42e3a2 1-81
+src/receiptFetchers/buhta-kz/fetchApi.ts
+  s_4638eb4bf5afea::t_1996a4f8046d19 1-11
+src/receiptFetchers/buhta-kz/ZenmoneyManifest.ts
+  s_4638eb4bf5afea::t_f8733d50f07109 1-7
+src/receiptFetchers/buhta-kz/api.ts
+  s_4638eb4bf5afea::t_a25ad3b310c61d 1-13
+src/receiptFetchers/buhta-kz/index.ts
+  s_4638eb4bf5afea::t_4a9b7583ae5620 1-11
+src/receiptFetchers/buhta-kz/protocol.ts
+  s_4638eb4bf5afea::t_39c7b92bbabe9f 1-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "ef907c62e2645ad909b2becb68acad3aae02ca43",
+  "prompts": {},
+  "sessions": {
+    "s_4638eb4bf5afea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1748c-14c1-7bc1-b4f4-a971fd139ed6",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
