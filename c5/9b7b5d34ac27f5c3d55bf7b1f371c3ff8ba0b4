@@ -1,0 +1,25 @@
+src/plugins/ffin-kz/__tests__/cashbacks/conversion.test.ts
+  s_d02b13409db3df::t_52f0c6d4240ce1 15-22
+src/plugins/ffin-kz/__tests__/cashbacks/workflow.test.ts
+  s_d02b13409db3df::t_32e19bdf614511 38-39,42,51-52,82,90,103
+src/plugins/ffin-kz/cashback-api.ts
+  s_d02b13409db3df::t_37b214c036af63 43-53,56-74
+src/plugins/ffin-kz/cashback-mappings.ts
+  s_d02b13409db3df::t_b836ec3d5519de 4,31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c59b7b5d34ac27f5c3d55bf7b1f371c3ff8ba0b4",
+  "prompts": {},
+  "sessions": {
+    "s_d02b13409db3df": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a20399-6d75-7862-a7f0-08d214f00710",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
