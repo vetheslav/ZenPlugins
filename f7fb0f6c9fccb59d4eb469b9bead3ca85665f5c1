@@ -1,0 +1,19 @@
+src/receiptFetchers/oofd-kz/__tests__/fetchReceipt.test.ts
+  s_e53ac338982604::t_30b5baa73e905e 1-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f7fb0f6c9fccb59d4eb469b9bead3ca85665f5c1",
+  "prompts": {},
+  "sessions": {
+    "s_e53ac338982604": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a20386-9b1e-7c22-b12b-e4783f0b34ff",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
