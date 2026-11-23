@@ -1,0 +1,27 @@
+src/receiptFetchers/webkassa-by/__tests__/fetchReceipt-01.json
+  s_06dbe85742fa33::t_1378d33a0c5606 1
+src/receiptFetchers/webkassa-by/__tests__/fetchReceipt.test.ts
+  s_06dbe85742fa33::t_429dd4cad35338 19,21
+src/receiptFetchers/webkassa-by/api.ts
+  s_06dbe85742fa33::t_18fb503db863ef 4,7-13
+src/receiptFetchers/webkassa-by/converters.ts
+  s_06dbe85742fa33::t_56476c81d80403 5-10,13-38,43,46,49,54-59,65-71,73
+src/receiptFetchers/webkassa-by/fetchApi.ts
+  s_06dbe85742fa33::t_fbbb00431c00f0 2,4,6-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a7db04a9e6fb76292a80f3a0aa25c6fee9ebca25",
+  "prompts": {},
+  "sessions": {
+    "s_06dbe85742fa33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a209c6-2470-70d3-9827-57ece159b13c",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
