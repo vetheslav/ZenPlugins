@@ -1,0 +1,23 @@
+src/receiptFetchers/ikassa-by/__tests__/fetchReceipt.test.ts
+  s_06dbe85742fa33::t_b7325917072e93 2-3,9,31-32,39,80-100,103-106,108-116
+src/receiptFetchers/ikassa-by/api.ts
+  s_06dbe85742fa33::t_05cef1b176ee8c 23,30
+src/receiptFetchers/ikassa-by/index.ts
+  s_06dbe85742fa33::t_43c143d100dff1 5-6,12-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "04eb1b71f6633b3df711bee06dc772bbc97e1ac3",
+  "prompts": {},
+  "sessions": {
+    "s_06dbe85742fa33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a209c6-2470-70d3-9827-57ece159b13c",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
