@@ -1,0 +1,21 @@
+src/receiptFetchers/mns-by/__tests__/convertReceipt.test.ts
+  s_06dbe85742fa33::t_3ba6f101ad2d31 1,9,92
+src/receiptFetchers/mns-by/__tests__/fetchReceipt.test.ts
+  s_06dbe85742fa33::t_7b318de8d6e1da 4,13,69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6a6ce3d6a255bfe21d152af9dcb5f93de67387ac",
+  "prompts": {},
+  "sessions": {
+    "s_06dbe85742fa33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a209c6-2470-70d3-9827-57ece159b13c",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
