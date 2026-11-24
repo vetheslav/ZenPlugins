@@ -1,0 +1,37 @@
+src/receiptFetchers/mns-by/ZenmoneyManifest.ts
+  s_06dbe85742fa33::t_68c935cec2e990 1-8
+src/receiptFetchers/mns-by/__tests__/convertReceipt-01.json
+  s_06dbe85742fa33::t_9711bc49d587f6 1
+src/receiptFetchers/mns-by/__tests__/convertReceipt-02.json
+  s_06dbe85742fa33::t_43a19b113a9f11 1
+src/receiptFetchers/mns-by/__tests__/convertReceipt.test.ts
+  s_06dbe85742fa33::t_d88d72e78c38eb 1-106
+src/receiptFetchers/mns-by/__tests__/fetchReceipt.test.ts
+  s_06dbe85742fa33::t_421cc6f6275677 1-73
+src/receiptFetchers/mns-by/code.ts
+  s_06dbe85742fa33::t_b66d7bb79d5eda 1
+src/receiptFetchers/mns-by/converters.ts
+  s_06dbe85742fa33::t_9a02cbefcf3194 1-58
+src/receiptFetchers/mns-by/fetchApi.ts
+  s_06dbe85742fa33::t_b867c70d3da6b2 1-57
+src/receiptFetchers/mns-by/index.ts
+  s_06dbe85742fa33::t_bd1821f6170807 1-24
+src/receiptFetchers/mns-by/receiptForm.webview.ts
+  s_06dbe85742fa33::t_03b208baca7d91 1-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "46cd32ccf3df5c8de0c24c4bff057d9f362e2e23",
+  "prompts": {},
+  "sessions": {
+    "s_06dbe85742fa33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a209c6-2470-70d3-9827-57ece159b13c",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
