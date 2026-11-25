@@ -1,0 +1,23 @@
+src/receiptFetchers/webkassa-by/ZenmoneyManifest.ts
+  s_06dbe85742fa33::t_4f83ffc2503392 2,8
+src/receiptFetchers/webkassa-by/__tests__/fetchReceipt.test.ts
+  s_06dbe85742fa33::t_f4e366c62f2a99 31,83,86
+src/receiptFetchers/webkassa-by/api.ts
+  s_06dbe85742fa33::t_1ba6baa449a561 2,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "03c1ff740e6f334db5151faed49b3c1b90296e82",
+  "prompts": {},
+  "sessions": {
+    "s_06dbe85742fa33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a209c6-2470-70d3-9827-57ece159b13c",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
