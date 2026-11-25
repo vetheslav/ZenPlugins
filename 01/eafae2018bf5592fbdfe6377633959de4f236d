@@ -1,0 +1,23 @@
+src/receiptFetchers/ikassa-by/__tests__/convertHtmlReceipt-04.html
+  s_1ac2f4528a4c27::t_e1c674959ec262 1-86
+src/receiptFetchers/ikassa-by/__tests__/convertHtmlReceipt.test.ts
+  s_1ac2f4528a4c27::t_0f3208c22c9fc6 4,115-155
+src/receiptFetchers/ikassa-by/converters.ts
+  s_1ac2f4528a4c27::t_9523bd0978819b 4,109-112,121-126,142-161
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "01eafae2018bf5592fbdfe6377633959de4f236d",
+  "prompts": {},
+  "sessions": {
+    "s_1ac2f4528a4c27": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a21413-5c89-75c1-bde3-549ae3c4be5e",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
