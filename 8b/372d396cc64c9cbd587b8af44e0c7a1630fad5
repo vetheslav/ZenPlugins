@@ -1,0 +1,33 @@
+src/receiptFetchers/mns-by/__tests__/convertReceipt-01.json
+  s_591cacf537c5ea::t_09687dee28a2ee 1
+src/receiptFetchers/mns-by/__tests__/convertReceipt-02.json
+  s_591cacf537c5ea::t_521175716250ff 1
+src/receiptFetchers/mns-by/__tests__/convertReceipt-03.json
+  s_591cacf537c5ea::t_34eae87e9ed419 1-38
+src/receiptFetchers/mns-by/__tests__/convertReceipt.test.ts
+  s_591cacf537c5ea::t_567278646f371b 5,9,36-79
+src/receiptFetchers/mns-by/__tests__/fetchReceipt.test.ts
+  s_591cacf537c5ea::t_5ca2509ece27f3 3,32-97,104-106,108-109,111-116,118-120,127-138,141
+src/receiptFetchers/mns-by/converters.ts
+  s_591cacf537c5ea::t_2d5c3f72d8ab87 1,10-21
+src/receiptFetchers/mns-by/fetchApi.ts
+  s_591cacf537c5ea::t_d4d06d73bb22e0 4,9-10,13,23-28,43-63,65-94,100
+src/receiptFetchers/mns-by/receiptForm.webview.ts
+  s_591cacf537c5ea::t_70dbd2aa160be4 12,16,20,32-35,45-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8b372d396cc64c9cbd587b8af44e0c7a1630fad5",
+  "prompts": {},
+  "sessions": {
+    "s_591cacf537c5ea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a2142d-07fb-7281-b249-51096bd006f3",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
