@@ -1,0 +1,41 @@
+src/plugins/ffin-kz/__tests__/cashbacks/workflow.test.ts
+  s_34acc7fdee80c1::t_cdb01142ec6b81 64-74
+src/plugins/ffin-kz/index.ts
+  s_ec008436ef081c::t_62a8646913d97e 72
+src/plugins/ffin-kz/models.ts
+  s_ec008436ef081c::t_c8a186d5b652ce 10
+src/plugins/ffin-kz/preferences.xml
+  s_0eec5c9a919314::t_504bea603898b6 13-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b8338cffc842e0b52fdb224eec7dfa9b9fd74e5b",
+  "prompts": {},
+  "sessions": {
+    "s_0eec5c9a919314": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a21262-891f-7281-8a3b-f8127d0b0002",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    },
+    "s_34acc7fdee80c1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c0777607-f5be-446c-bbfd-ed43ca63d395",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    },
+    "s_ec008436ef081c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9304156-1bae-4465-8828-d5e9a3581cbc",
+        "model": "unknown"
+      },
+      "human_author": "Slava Shahoika <vistova@gmail.com>"
+    }
+  }
+}
